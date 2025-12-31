@@ -110,6 +110,10 @@
           {
             "label": "Components",
             "href": "/reference/components"
+          },
+          {
+            "label": "API Reference",
+            "href": "/reference/api"
           }
         ]
       }

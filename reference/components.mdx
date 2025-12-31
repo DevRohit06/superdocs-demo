@@ -5,53 +5,359 @@ description: Built-in components available in MDX.
 
 # Components
 
-SuperDocs comes with a set of built-in components to make your documentation richer. These are available globally in all `.mdx` files.
+SuperDocs comes with a set of built-in components to make your documentation richer. These are available globally in all `.mdx` files — no imports needed.
+
+---
 
 ## Card
 
 A simple card component for links or highlights.
 
 ```jsx
-<Card title="Title" icon="soem-icon" href="/link">
-  Content
+<Card title="Getting Started" icon="🚀" href="/getting-started/installation">
+  Learn how to install and configure SuperDocs.
 </Card>
 ```
+
+<Card title="Getting Started" icon="🚀" href="/getting-started/installation">
+  Learn how to install and configure SuperDocs.
+</Card>
 
 | Prop | Type | Description |
 | :--- | :--- | :--- |
 | `title` | `string` | The card title. |
-| `icon` | `string` | Icon name (optional). |
-| `href` | `string` | URL to link to (optional). |
+| `icon` | `string` | Icon or emoji (optional). |
+| `href` | `string` | URL to link to (optional). Makes the card clickable. |
+
+---
 
 ## CardGroup
 
-A layout component to display Cards in a grid.
+A layout component to display Cards in a responsive grid.
 
 ```jsx
 <CardGroup>
-  <Card ... />
-  <Card ... />
+  <Card title="Installation" icon="📦" href="/getting-started/installation">
+    Get up and running quickly.
+  </Card>
+  <Card title="Configuration" icon="⚙️" href="/reference/configuration">
+    Customize your docs site.
+  </Card>
 </CardGroup>
 ```
 
+<CardGroup>
+  <Card title="Installation" icon="📦" href="/getting-started/installation">
+    Get up and running quickly.
+  </Card>
+  <Card title="Configuration" icon="⚙️" href="/reference/configuration">
+    Customize your docs site.
+  </Card>
+</CardGroup>
+
+---
+
 ## Tabs
 
-Organize content into tabs.
+Organize content into switchable tabs.
 
 ```jsx
 <Tabs>
-  <Tab title="Tab 1">
-    Content 1
+  <Tab title="npm">
+    npm install superdocs
   </Tab>
-  <Tab title="Tab 2">
-    Content 2
+  <Tab title="yarn">
+    yarn add superdocs
+  </Tab>
+  <Tab title="pnpm">
+    pnpm add superdocs
   </Tab>
 </Tabs>
 ```
 
-## Note / Admonition
+<Tabs>
+  <Tab title="npm">
+    ```bash
+    npm install superdocs
+    ```
+  </Tab>
+  <Tab title="yarn">
+    ```bash
+    yarn add superdocs
+    ```
+  </Tab>
+  <Tab title="pnpm">
+    ```bash
+    pnpm add superdocs
+    ```
+  </Tab>
+</Tabs>
 
-See [Markdown Features](/concepts/markdown-features) for usage of GitHub-style alerts which render as admonitions.
+---
+
+## Accordion
+
+Collapsible content sections for FAQs or optional details.
+
+```jsx
+<Accordion title="What is SuperDocs?" icon="❓">
+  SuperDocs is an open-source documentation generator built on Astro.
+</Accordion>
+
+<Accordion title="Is SuperDocs free?" defaultOpen>
+  Yes! SuperDocs is completely free and open-source.
+</Accordion>
+```
+
+<Accordion title="What is SuperDocs?" icon="❓">
+  SuperDocs is an open-source documentation generator built on Astro.
+</Accordion>
+
+<Accordion title="Is SuperDocs free?" defaultOpen>
+  Yes! SuperDocs is completely free and open-source.
+</Accordion>
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `string` | - | The accordion header text. |
+| `icon` | `string` | - | Optional icon/emoji. |
+| `defaultOpen` | `boolean` | `false` | Whether the accordion starts expanded. |
+
+---
+
+## Steps
+
+Display numbered step-by-step instructions.
+
+```jsx
+<Steps>
+  <Step title="Install SuperDocs">
+    Run `npx superdocs create my-docs` to create a new project.
+  </Step>
+  <Step title="Configure">
+    Edit the `docs-config.json` file to customize your site.
+  </Step>
+  <Step title="Deploy">
+    Push to GitHub and deploy with Vercel or Netlify.
+  </Step>
+</Steps>
+```
+
+<Steps>
+  <Step title="Install SuperDocs">
+    Run `npx superdocs create my-docs` to create a new project.
+  </Step>
+  <Step title="Configure">
+    Edit the `docs-config.json` file to customize your site.
+  </Step>
+  <Step title="Deploy">
+    Push to GitHub and deploy with Vercel or Netlify.
+  </Step>
+</Steps>
+
+| Component | Prop | Type | Description |
+| :--- | :--- | :--- | :--- |
+| `Steps` | - | - | Container for Step items. |
+| `Step` | `title` | `string` | Optional step title. |
+
+---
+
+## Callout
+
+Enhanced alerts/admonitions with different types.
+
+```jsx
+<Callout type="note" title="Note">
+  This is a note callout with helpful information.
+</Callout>
+
+<Callout type="tip">
+  Pro tip: Use callouts to highlight important info!
+</Callout>
+
+<Callout type="warning" title="Warning">
+  Be careful with this operation.
+</Callout>
+```
+
+<Callout type="note" title="Note">
+  This is a note callout with helpful information.
+</Callout>
+
+<Callout type="tip">
+  Pro tip: Use callouts to highlight important info!
+</Callout>
+
+<Callout type="warning" title="Warning">
+  Be careful with this operation.
+</Callout>
+
+<Callout type="danger">
+  This is a danger callout for critical warnings.
+</Callout>
+
+| Prop | Type | Options | Description |
+| :--- | :--- | :--- | :--- |
+| `type` | `string` | `note`, `tip`, `info`, `warning`, `danger`, `check` | The callout type. |
+| `title` | `string` | - | Override the default title. |
+| `icon` | `string` | - | Override the default icon. |
+
+---
+
+## CodeGroup
+
+Tabbed code blocks for showing code in multiple languages. Use the `title` attribute on code blocks to set tab names.
+
+````text
+<CodeGroup>
+  ```bash title="npm"
+  npm install superdocs
+  ```
+  ```bash title="yarn"
+  yarn add superdocs
+  ```
+</CodeGroup>
+````
+
+> [!TIP]
+> Add `title="Tab Name"` to your code blocks to customize the tab labels.
+
+---
+
+## Badge
+
+Inline status badges for labeling content.
+
+```jsx
+<Badge>Default</Badge>
+<Badge variant="success">Success</Badge>
+<Badge variant="warning">Warning</Badge>
+<Badge variant="danger">Deprecated</Badge>
+<Badge variant="info">Beta</Badge>
+```
+
+<Badge>Default</Badge> <Badge variant="success">Success</Badge> <Badge variant="warning">Warning</Badge> <Badge variant="danger">Deprecated</Badge> <Badge variant="info">Beta</Badge>
+
+| Prop | Type | Options | Description |
+| :--- | :--- | :--- | :--- |
+| `variant` | `string` | `default`, `success`, `warning`, `danger`, `info` | Badge color variant. |
+
+---
+
+## Tooltip
+
+Hover tooltips for additional context.
+
+```jsx
+The <Tooltip content="Application Programming Interface">API</Tooltip> is well documented.
+```
+
+The <Tooltip content="Application Programming Interface">API</Tooltip> is well documented.
+
+| Prop | Type | Description |
+| :--- | :--- | :--- |
+| `content` | `string` | The tooltip text shown on hover. |
+
+---
+
+## Frame
+
+A styled container for images or videos with optional captions.
+
+```jsx
+<Frame caption="Architecture diagram">
+  <img src="/architecture.png" alt="Architecture" />
+</Frame>
+```
+
+| Prop | Type | Description |
+| :--- | :--- | :--- |
+| `caption` | `string` | Caption text displayed below the content. |
+
+---
+
+## Columns
+
+Create multi-column layouts.
+
+```jsx
+<Columns cols={2}>
+  <Column>
+    **Left Column**
+    
+    Content for the left side.
+  </Column>
+  <Column>
+    **Right Column**
+    
+    Content for the right side.
+  </Column>
+</Columns>
+```
+
+<Columns cols={2}>
+  <Column>
+    **Left Column**
+    
+    Content for the left side.
+  </Column>
+  <Column>
+    **Right Column**
+    
+    Content for the right side.
+  </Column>
+</Columns>
+
+| Component | Prop | Type | Options | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `Columns` | `cols` | `number` | `2`, `3`, `4` | Number of columns (default: 2). |
+| `Column` | - | - | - | Individual column container. |
+
+---
+
+## GitHub-Style Alerts
+
+SuperDocs also supports GitHub-style blockquote alerts:
+
+```markdown
+> [!NOTE]
+> This is a note.
+
+> [!TIP]
+> This is a helpful tip.
+
+> [!IMPORTANT]
+> Critical information here.
+
+> [!WARNING]
+> Be careful!
+
+> [!CAUTION]
+> Potential danger ahead.
+```
 
 > [!NOTE]
-> Like this one.
+> This is a note.
+
+> [!TIP]
+> This is a helpful tip.
+
+> [!IMPORTANT]
+> Critical information here.
+
+> [!WARNING]
+> Be careful!
+
+> [!CAUTION]
+> Potential danger ahead.
+
+---
+
+## API Documentation Components
+
+For documenting APIs, see the dedicated [API Reference](/reference/api) page which covers:
+
+- `APIEndpoint` - Display API endpoints with method badges
+- `APIPlayground` - Interactive API testing
+- `ParamTable` / `Param` - Parameter documentation
+- `ResponseField` - Response field documentation
