@@ -17,19 +17,30 @@ superdocs build --input ./my-docs --output ./dist [options]
 
 ### Options
 
-| Option       | Alias | Type     | Description                                                    | Default   |
-| :----------- | :---- | :------- | :------------------------------------------------------------- | :-------- |
-| `--input`    | `-i`  | `<path>` | **Required.** Path to your docs folder                         | —         |
-| `--output`   | `-o`  | `<path>` | Output directory for the built site                            | `./dist`  |
-| `--template` | `-t`  | `<name>` | Template to use: `default`, `github:owner/repo`, or local path | `default` |
-| `--base-url` | `-b`  | `<url>`  | Base URL for the site (useful for subpath deployments)         | `/`       |
-| `--search`   | —     | flag     | Enable search functionality                                    | `false`   |
-| `--refresh`  | —     | flag     | Force re-download template from GitHub, bypassing cache        | `false`   |
+| Option              | Alias | Type     | Description                                                    | Default   |
+| :------------------ | :---- | :------- | :------------------------------------------------------------- | :-------- |
+| `--input`           | `-i`  | `<path>` | **Required.** Path to your docs folder                         | —         |
+| `--output`          | `-o`  | `<path>` | Output directory for the built site                            | `./dist`  |
+| `--template`        | `-t`  | `<name>` | Template to use: `default`, `github:owner/repo`, or local path | `default` |
+| `--base-url`        | `-b`  | `<url>`  | Base URL for the site (useful for subpath deployments)         | `/`       |
+| `--name`            | —     | `<name>` | Set project name                                               | —         |
+| `--description`     | —     | `<text>` | Set project description                                        | —         |
+| `--primary-color`   | —     | `<hex>`  | Set primary theme color (hex format)                           | —         |
+| `--accent-color`    | —     | `<hex>`  | Set accent theme color (hex format)                            | —         |
+| `--favicon`         | —     | `<path>` | Set favicon path                                               | —         |
+| `--logo`            | —     | `<path>` | Set logo path                                                  | —         |
+| `--search`          | —     | flag     | Enable search functionality                                    | `false`   |
+| `--refresh`         | —     | flag     | Force re-download template from GitHub, bypassing cache        | `false`   |
 
 ### Example
 
 ```bash
-superdocs build -i ./docs -o ./build --template default --base-url /docs/ --search
+superdocs build -i ./docs -o ./build \
+  --name "My Documentation" \
+  --description "Complete reference" \
+  --primary-color "#0066CC" \
+  --accent-color "#00CC66" \
+  --search
 ```
 
 ## `dev`
@@ -42,19 +53,27 @@ superdocs dev --input ./my-docs [options]
 
 ### Options
 
-| Option       | Alias | Type       | Description                                                    | Default   |
-| :----------- | :---- | :--------- | :------------------------------------------------------------- | :-------- |
-| `--input`    | `-i`  | `<path>`   | **Required.** Path to your docs folder                         | —         |
-| `--template` | `-t`  | `<name>`   | Template to use: `default`, `github:owner/repo`, or local path | `default` |
-| `--base-url` | `-b`  | `<url>`    | Base URL for the site                                          | `/`       |
-| `--port`     | `-p`  | `<number>` | Port for the development server                                | `4321`    |
-| `--search`   | —     | flag       | Enable search functionality                                    | `false`   |
-| `--refresh`  | —     | flag       | Force re-download template from GitHub, bypassing cache        | `false`   |
+| Option              | Alias | Type       | Description                                                    | Default   |
+| :------------------ | :---- | :--------- | :------------------------------------------------------------- | :-------- |
+| `--input`           | `-i`  | `<path>`   | **Required.** Path to your docs folder                         | —         |
+| `--template`        | `-t`  | `<name>`   | Template to use: `default`, `github:owner/repo`, or local path | `default` |
+| `--base-url`        | `-b`  | `<url>`    | Base URL for the site                                          | `/`       |
+| `--port`            | `-p`  | `<number>` | Port for the development server                                | `4321`    |
+| `--name`            | —     | `<name>`   | Set project name                                               | —         |
+| `--description`     | —     | `<text>`   | Set project description                                        | —         |
+| `--primary-color`   | —     | `<hex>`    | Set primary theme color (hex format)                           | —         |
+| `--accent-color`    | —     | `<hex>`    | Set accent theme color (hex format)                            | —         |
+| `--favicon`         | —     | `<path>`   | Set favicon path                                               | —         |
+| `--logo`            | —     | `<path>`   | Set logo path                                                  | —         |
+| `--search`          | —     | flag       | Enable search functionality                                    | `false`   |
+| `--refresh`         | —     | flag       | Force re-download template from GitHub, bypassing cache        | `false`   |
 
 ### Example
 
 ```bash
-superdocs dev -i ./docs -p 5000 --template default
+superdocs dev -i ./docs -p 5000 \
+  --name "Development Docs" \
+  --primary-color "#3B82F6"
 ```
 
 ## `eject`
@@ -67,19 +86,28 @@ superdocs eject --input ./my-docs --output ./astro-docs-project [options]
 
 ### Options
 
-| Option       | Alias | Type     | Description                                                    | Default                |
-| :----------- | :---- | :------- | :------------------------------------------------------------- | :--------------------- |
-| `--input`    | `-i`  | `<path>` | **Required.** Path to your docs folder                         | —                      |
-| `--output`   | `-o`  | `<path>` | Output directory for the Astro project                         | `./astro-docs-project` |
-| `--template` | `-t`  | `<name>` | Template to use: `default`, `github:owner/repo`, or local path | `default`              |
-| `--base-url` | `-b`  | `<url>`  | Base URL for the site                                          | `/`                    |
-| `--search`   | —     | flag     | Enable search functionality                                    | `false`                |
-| `--refresh`  | —     | flag     | Force re-download template from GitHub, bypassing cache        | `false`                |
+| Option              | Alias | Type     | Description                                                    | Default                |
+| :------------------ | :---- | :------- | :------------------------------------------------------------- | :--------------------- |
+| `--input`           | `-i`  | `<path>` | **Required.** Path to your docs folder                         | —                      |
+| `--output`          | `-o`  | `<path>` | Output directory for the Astro project                         | `./astro-docs-project` |
+| `--template`        | `-t`  | `<name>` | Template to use: `default`, `github:owner/repo`, or local path | `default`              |
+| `--base-url`        | `-b`  | `<url>`  | Base URL for the site                                          | `/`                    |
+| `--name`            | —     | `<name>` | Set project name                                               | —                      |
+| `--description`     | —     | `<text>` | Set project description                                        | —                      |
+| `--primary-color`   | —     | `<hex>`  | Set primary theme color (hex format)                           | —                      |
+| `--accent-color`    | —     | `<hex>`  | Set accent theme color (hex format)                            | —                      |
+| `--favicon`         | —     | `<path>` | Set favicon path                                               | —                      |
+| `--logo`            | —     | `<path>` | Set logo path                                                  | —                      |
+| `--search`          | —     | flag     | Enable search functionality                                    | `false`                |
+| `--refresh`         | —     | flag     | Force re-download template from GitHub, bypassing cache        | `false`                |
 
 ### Example
 
 ```bash
-superdocs eject -i ./docs -o ./my-astro-project --refresh
+superdocs eject -i ./docs -o ./my-astro-project \
+  --name "Customizable Docs" \
+  --primary-color "#10B981" \
+  --refresh
 ```
 
 Once ejected, you have a full Astro project and can use all standard Astro commands:

@@ -40,10 +40,33 @@ This repository contains a sample documentation site built with [SuperDocs](http
 3. Start the development server:
 
    ```bash
-   npx --yes @devrohit06/superdocs dev
+   npx --yes @devrohit06/superdocs dev -i .
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Open [http://localhost:4321](http://localhost:4321) in your browser.
+
+### Development with Custom Configuration
+
+You can customize your documentation on-the-fly using CLI options:
+
+```bash
+# Custom branding and colors
+npx --yes @devrohit06/superdocs dev -i . \
+  --name "My Custom Docs" \
+  --description "Custom documentation site" \
+  --primary-color "#0066CC" \
+  --accent-color "#00CC66"
+```
+
+**Available CLI Options:**
+
+- `--name <name>` - Set project name
+- `--description <description>` - Set project description
+- `--primary-color <color>` - Set primary theme color (hex)
+- `--accent-color <color>` - Set accent theme color (hex)
+- `--favicon <path>` - Set favicon path
+- `--logo <path>` - Set logo path
+- `-p, --port <number>` - Dev server port (default: 4321)
 
 ### Building for Production
 
@@ -51,6 +74,15 @@ To create a production build:
 
 ```bash
 npx --yes @devrohit06/superdocs build -i .
+```
+
+With custom configuration:
+
+```bash
+npx --yes @devrohit06/superdocs build -i . \
+  --name "Production Docs" \
+  --primary-color "#FF5733" \
+  --accent-color "#33FF57"
 ```
 
 This generates a `dist` folder with static files.
