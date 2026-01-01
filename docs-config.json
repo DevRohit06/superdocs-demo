@@ -196,7 +196,7 @@
     "enableBreadcrumbs": true
   },
   "landing": {
-    "enabled": true,
+    "enabled": false,
     "hero": {
       "version": "v0.3.0 is now available",
       "title": "SuperDocs <br/> <span class='text-primary'>Generated Landing</span>",
