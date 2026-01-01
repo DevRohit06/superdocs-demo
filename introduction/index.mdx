@@ -9,31 +9,81 @@ SuperDocs is a powerful, flexible, and design-forward documentation generator bu
 
 ## Key Features
 
-- **Zero Config**: Get up and running with a single JSON file.
-- **MDX Support**: Use React/Preact/Svelte/Vue/Solid components directly in your markdown.
-- **Auto-generated Sidebar**: Your file structure dictates your sidebar (unless you override it).
-- **Theming**: Fully customizable color palettes and branding.
-- **Interactive Components**: Built-in components like code playgrounds, tabs, and more.
-- **SEO Optimized**: Standard SEO practices built-in.
+<Columns cols={2}>
+  <Column>
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
+      <Icon name="lucide:zap" size={20} class="text-primary-500" style="margin-top: 0.25rem; flex-shrink: 0;" />
+      <div>
+        **Zero Config**
+        Get up and running with a single JSON file.
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
+      <Icon name="lucide:file-code" size={20} class="text-primary-500" style="margin-top: 0.25rem; flex-shrink: 0;" />
+      <div>
+        **MDX Support**
+        Use React/Preact/Svelte/Vue/Solid components directly in your markdown.
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
+      <Icon name="lucide:panel-left" size={20} class="text-primary-500" style="margin-top: 0.25rem; flex-shrink: 0;" />
+      <div>
+        **Auto-generated Sidebar**
+        Your file structure dictates your sidebar (unless you override it).
+      </div>
+    </div>
+  </Column>
+  <Column>
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
+      <Icon name="lucide:palette" size={20} class="text-primary-500" style="margin-top: 0.25rem; flex-shrink: 0;" />
+      <div>
+        **Theming**
+        Fully customizable color palettes and branding.
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
+      <Icon name="lucide:blocks" size={20} class="text-primary-500" style="margin-top: 0.25rem; flex-shrink: 0;" />
+      <div>
+        **Interactive Components**
+        Built-in components like code playgrounds, tabs, and more.
+      </div>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem;">
+      <Icon name="lucide:search" size={20} class="text-primary-500" style="margin-top: 0.25rem; flex-shrink: 0;" />
+      <div>
+        **SEO Optimized**
+        Standard SEO practices built-in.
+      </div>
+    </div>
+  </Column>
+</Columns>
 
 ## Philosophy
 
 SuperDocs was built with the belief that documentation should be:
 
-1.  **Beautiful by default**: You shouldn't need to be a designer to have good looking docs.
-2.  **Fast**: Both for the end user and the developer.
-3.  **Extensible**: Easy things should be easy, hard things should be possible.
+<Steps>
+  <Step title="Beautiful by default">
+    <Icon name="lucide:sparkles" size={18} class="text-primary-500" /> You shouldn't need to be a designer to have good looking docs.
+  </Step>
+  <Step title="Fast">
+    <Icon name="lucide:rocket" size={18} class="text-primary-500" /> Both for the end user and the developer.
+  </Step>
+  <Step title="Extensible">
+    <Icon name="lucide:puzzle" size={18} class="text-primary-500" /> Easy things should be easy, hard things should be possible.
+  </Step>
+</Steps>
 
 ## Next Steps
 
 <CardGroup>
-  <Card title="Installation" icon="rocket" href="/getting-started/installation">
+  <Card title="Installation" icon="lucide:download" href="/getting-started/installation">
     Get SuperDocs running on your machine in under 5 minutes.
   </Card>
-  <Card title="Configuration" icon="settings" href="/reference/configuration">
+  <Card title="Configuration" icon="lucide:settings" href="/reference/configuration">
     Learn how to customize your site with `docs-config.json`.
   </Card>
-  <Card title="Theming" icon="palette" href="/guides/customizing-theme">
+  <Card title="Theming" icon="lucide:palette" href="/guides/customizing-theme">
     Make the documentation site your own with custom colors and branding.
   </Card>
 </CardGroup>

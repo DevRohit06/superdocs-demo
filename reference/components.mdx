@@ -353,6 +353,84 @@ SuperDocs also supports GitHub-style blockquote alerts:
 
 ---
 
+## Icon
+
+Display icons from multiple icon sets powered by [Iconify](https://iconify.design/). Available globally in all MDX files.
+
+### Basic Usage
+
+```jsx
+<Icon name="lucide:rocket" />
+<Icon name="heroicons:home" size={24} />
+<Icon name="mdi:github" class="text-primary-500" />
+```
+
+<Columns cols={4}>
+  <Column>
+    <Icon name="lucide:rocket" size={32} />
+    `lucide:rocket`
+  </Column>
+  <Column>
+    <Icon name="heroicons:home" size={32} />
+    `heroicons:home`
+  </Column>
+  <Column>
+    <Icon name="mdi:github" size={32} />
+    `mdi:github`
+  </Column>
+  <Column>
+    <Icon name="fa6-brands:twitter" size={32} />
+    `fa6-brands:twitter`
+  </Column>
+</Columns>
+
+### Available Icon Sets
+
+| Icon Set | Prefix | Description |
+| :--- | :--- | :--- |
+| Lucide | `lucide:` | Clean, consistent stroke icons (recommended) |
+| Heroicons | `heroicons:` | Beautiful hand-crafted icons by Tailwind |
+| Material Design Icons | `mdi:` | Google's Material Design icon set |
+| Font Awesome Solid | `fa6-solid:` | Font Awesome 6 solid icons |
+| Font Awesome Brands | `fa6-brands:` | Font Awesome 6 brand icons |
+
+### Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `name` | `string` | - | Icon name in `set:icon-name` format. |
+| `size` | `number \| string` | `24` | Icon width and height in pixels. |
+| `class` | `string` | - | Additional CSS classes. |
+| `aria-hidden` | `boolean` | `true` | Hide from screen readers. |
+
+### Sidebar Icons
+
+Sidebar groups automatically get icons based on their label. You can also specify custom icons in your navigation config:
+
+| Group Label | Default Icon |
+| :--- | :--- |
+| Getting Started | `lucide:rocket` |
+| Introduction | `lucide:book-open` |
+| Guides | `lucide:compass` |
+| Concepts | `lucide:lightbulb` |
+| Reference | `lucide:file-code` |
+| API | `lucide:code` |
+| Components | `lucide:puzzle` |
+| Examples | `lucide:folder-open` |
+| Tutorials | `lucide:graduation-cap` |
+| Configuration | `lucide:settings` |
+| Deployment | `lucide:cloud-upload` |
+| Troubleshooting | `lucide:bug` |
+| FAQ | `lucide:help-circle` |
+| Changelog | `lucide:history` |
+| Resources | `lucide:library` |
+
+### Finding Icons
+
+Browse all available icons at [icon-sets.iconify.design](https://icon-sets.iconify.design/). Search for any icon, then use it with the format `set-name:icon-name`.
+
+---
+
 ## API Documentation Components
 
 For documenting APIs, see the dedicated [API Reference](/reference/api) page which covers:
