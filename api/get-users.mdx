@@ -1,0 +1,81 @@
+---
+title: List Users
+description: Retrieve a list of all users in the system
+api: GET /users
+baseUrl: https://jsonplaceholder.typicode.com
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Returns a paginated list of all users. Use query parameters to control pagination and filtering.
+
+## Parameters
+
+<ParamTable type="query">
+  <Param name="_limit" type="integer" default="10">
+    Maximum number of users to return. Use for pagination.
+  </Param>
+  <Param name="_start" type="integer" default="0">
+    Number of users to skip. Use with `_limit` for pagination.
+  </Param>
+</ParamTable>
+
+## Response
+
+<ResponseField name="id" type="integer">
+  Unique identifier for the user
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Full name of the user
+</ResponseField>
+
+<ResponseField name="username" type="string">
+  Unique username for the user
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address of the user
+</ResponseField>
+
+<ResponseField name="phone" type="string">
+  Phone number of the user
+</ResponseField>
+
+<ResponseField name="website" type="string">
+  Personal website URL
+</ResponseField>
+
+<ResponseField name="address" type="object">
+  User's physical address including street, city, and zipcode
+</ResponseField>
+
+<ResponseField name="company" type="object">
+  User's company information including name and catchphrase
+</ResponseField>
+
+## Example Response
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "address": {
+      "street": "Kulas Light",
+      "suite": "Apt. 556",
+      "city": "Gwenborough",
+      "zipcode": "92998-3874"
+    },
+    "company": {
+      "name": "Romaguera-Crona",
+      "catchPhrase": "Multi-layered client-server neural-net"
+    }
+  }
+]
+```

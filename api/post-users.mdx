@@ -1,0 +1,85 @@
+---
+title: Create User
+description: Create a new user account
+api: POST /users
+baseUrl: https://jsonplaceholder.typicode.com
+auth: bearer
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Creates a new user account with the provided information. Returns the created user object with a generated ID.
+
+## Authorization
+
+<Alert type="warning">
+  This endpoint requires authentication. Include a valid Bearer token in the Authorization header.
+</Alert>
+
+## Request Body
+
+<ParamTable type="body">
+  <Param name="name" type="string" required>
+    Full name of the user
+  </Param>
+  <Param name="email" type="string" required>
+    Email address of the user. Must be a valid email format.
+  </Param>
+  <Param name="username" type="string">
+    Unique username for the user. If not provided, will be auto-generated.
+  </Param>
+  <Param name="phone" type="string">
+    Phone number of the user
+  </Param>
+  <Param name="website" type="string">
+    Personal website URL
+  </Param>
+</ParamTable>
+
+## Response
+
+Returns the created user object with the assigned ID.
+
+<ResponseField name="id" type="integer">
+  The auto-generated unique identifier for the new user
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  The name provided in the request
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  The email address provided in the request
+</ResponseField>
+
+## Example Request
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "username": "johndoe",
+  "phone": "555-1234"
+}
+```
+
+## Example Response
+
+```json
+{
+  "id": 11,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "username": "johndoe",
+  "phone": "555-1234"
+}
+```
+
+## Error Responses
+
+| Status | Description |
+|--------|-------------|
+| `400` | Invalid request body - missing required fields |
+| `401` | Unauthorized - missing or invalid authentication |
+| `409` | Conflict - user with this email already exists |

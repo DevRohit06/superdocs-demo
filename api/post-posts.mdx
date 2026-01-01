@@ -1,0 +1,80 @@
+---
+title: Create Post
+description: Create a new blog post
+api: POST /posts
+baseUrl: https://jsonplaceholder.typicode.com
+auth: bearer
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Creates a new blog post. Requires authentication.
+
+## Authorization
+
+<Alert type="info">
+  This endpoint requires a Bearer token for authentication.
+</Alert>
+
+## Request Body
+
+<ParamTable type="body">
+  <Param name="title" type="string" required>
+    Title of the post
+  </Param>
+  <Param name="body" type="string" required>
+    Content of the post. Supports plain text or markdown.
+  </Param>
+  <Param name="userId" type="integer" required>
+    ID of the user creating the post
+  </Param>
+</ParamTable>
+
+## Response
+
+Returns the created post object with the assigned ID.
+
+<ResponseField name="id" type="integer">
+  The auto-generated unique identifier for the new post
+</ResponseField>
+
+<ResponseField name="title" type="string">
+  The title provided in the request
+</ResponseField>
+
+<ResponseField name="body" type="string">
+  The content provided in the request
+</ResponseField>
+
+<ResponseField name="userId" type="integer">
+  The user ID provided in the request
+</ResponseField>
+
+## Example Request
+
+```json
+{
+  "title": "My First Blog Post",
+  "body": "This is the content of my first blog post. It supports **markdown** formatting!",
+  "userId": 1
+}
+```
+
+## Example Response
+
+```json
+{
+  "id": 101,
+  "title": "My First Blog Post",
+  "body": "This is the content of my first blog post. It supports **markdown** formatting!",
+  "userId": 1
+}
+```
+
+## Error Responses
+
+| Status | Description |
+|--------|-------------|
+| `400` | Invalid request body - missing required fields |
+| `401` | Unauthorized - missing or invalid Bearer token |

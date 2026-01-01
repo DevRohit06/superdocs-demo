@@ -1,0 +1,76 @@
+---
+title: Get Post Comments
+description: Retrieve all comments for a specific post
+api: GET /posts/{id}/comments
+baseUrl: https://jsonplaceholder.typicode.com
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Retrieves all comments associated with a specific blog post.
+
+## Path Parameters
+
+<ParamTable type="path">
+  <Param name="id" type="integer" required>
+    The ID of the post to get comments for
+  </Param>
+</ParamTable>
+
+## Response
+
+Returns an array of comment objects.
+
+<ResponseField name="id" type="integer">
+  Unique identifier for the comment
+</ResponseField>
+
+<ResponseField name="postId" type="integer">
+  ID of the post this comment belongs to
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Title or subject of the comment
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address of the commenter
+</ResponseField>
+
+<ResponseField name="body" type="string">
+  Content of the comment
+</ResponseField>
+
+## Example Response
+
+```json
+[
+  {
+    "postId": 1,
+    "id": 1,
+    "name": "id labore ex et quam laborum",
+    "email": "Eliseo@gardner.biz",
+    "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+  },
+  {
+    "postId": 1,
+    "id": 2,
+    "name": "quo vero reiciendis velit similique earum",
+    "email": "Jayne_Kuhic@sydney.com",
+    "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
+  }
+]
+```
+
+## Related Endpoints
+
+<Card title="Get Post Details" href="/api/get-posts-id" icon="lucide:file-text">
+  View the full post that these comments belong to
+</Card>
+
+## Error Responses
+
+| Status | Description |
+|--------|-------------|
+| `404` | Post not found - the specified post ID does not exist |

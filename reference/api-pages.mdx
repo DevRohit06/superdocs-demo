@@ -1,0 +1,211 @@
+---
+title: API Reference Pages
+description: Generate individual pages for each API endpoint from OpenAPI specs
+---
+
+# API Reference Pages
+
+SuperDocs can automatically generate individual documentation pages for each API endpoint in your OpenAPI specification, complete with a two-column layout featuring schema documentation on the left and an interactive playground on the right.
+
+## Quick Setup
+
+### 1. Add Your OpenAPI Spec
+
+Place your OpenAPI/Swagger specification file in your docs folder:
+
+```
+my-docs/
+├── reference/
+│   └── openapi.yaml    # Your OpenAPI spec
+├── api/
+│   └── [...slug].astro # Dynamic route (created below)
+└── docs-config.json
+```
+
+### 2. Create Dynamic API Routes
+
+Create a file `api/[...slug].astro` in your pages directory:
+
+```astro
+---
+import EndpointPage from '@superdocs/components/api/EndpointPage.astro';
+import {
+  parseOpenAPIFile,
+  generateEndpointPaths,
+} from '@superdocs/utils/openapi';
+import { resolve } from 'path';
+
+// Path to your OpenAPI spec
+const specPath = resolve(process.cwd(), 'src/pages/reference/openapi.yaml');
+const spec = await parseOpenAPIFile(specPath);
+
+export async function getStaticPaths() {
+  const specPath = resolve(process.cwd(), 'src/pages/reference/openapi.yaml');
+  const spec = await parseOpenAPIFile(specPath);
+  const paths = generateEndpointPaths(spec);
+
+  return paths.map((data) => ({
+    params: { slug: data.slug },
+    props: {
+      endpoint: data.endpoint,
+      spec: data.spec,
+      baseUrl: data.baseUrl,
+    },
+  }));
+}
+
+const { endpoint, spec: pageSpec, baseUrl } = Astro.props;
+---
+
+<EndpointPage endpoint={endpoint} spec={pageSpec} baseUrl={baseUrl} />
+```
+
+### 3. Generated Routes
+
+Each endpoint in your OpenAPI spec will get its own page:
+
+| Endpoint | Generated Route |
+|----------|-----------------|
+| `GET /users` | `/api/get-users` |
+| `POST /users` | `/api/post-users` |
+| `GET /users/{id}` | `/api/get-users-id` |
+| `PUT /users/{id}` | `/api/put-users-id` |
+| `DELETE /users/{id}` | `/api/delete-users-id` |
+
+## Page Layout
+
+Each generated API page features a two-column layout:
+
+<Card title="Left Column - Schema Documentation">
+  - Endpoint title and description
+  - HTTP method and path with copy button
+  - Authorization requirements
+  - Path, query, and header parameters
+  - Request body schema
+  - Response schema
+  - Error responses
+</Card>
+
+<Card title="Right Column - Interactive Playground">
+  - Editable base URL
+  - Parameter inputs
+  - Request body editor
+  - Authentication configuration
+  - Code generation (cURL, JavaScript, Python, Go)
+  - Live response viewer
+</Card>
+
+## Using APIEndpointLayout for MDX Pages
+
+For manual API pages in MDX, use the `APIEndpointLayout`:
+
+```mdx
+---
+layout: '@/layouts/APIEndpointLayout.astro'
+title: Get User
+description: Retrieve a single user by ID
+api: GET /users/{id}
+baseUrl: https://api.example.com
+auth: bearer
+---
+
+<ParamTable type="path">
+  <Param name="id" type="integer" required>
+    The unique identifier of the user
+  </Param>
+</ParamTable>
+
+<ParamTable type="query">
+  <Param name="include" type="string" enum={["profile", "posts", "all"]}>
+    Additional data to include in the response
+  </Param>
+</ParamTable>
+```
+
+## Available Utilities
+
+The `openapi.ts` utility provides these functions:
+
+<Tabs>
+  <Tab title="parseOpenAPIFile">
+    ```typescript
+    import { parseOpenAPIFile } from '@superdocs/utils/openapi';
+
+    // Parse an OpenAPI spec from a file
+    const spec = await parseOpenAPIFile('./openapi.yaml');
+    ```
+  </Tab>
+
+  <Tab title="generateEndpointPaths">
+    ```typescript
+    import { generateEndpointPaths } from '@superdocs/utils/openapi';
+
+    // Generate static paths for all endpoints
+    const paths = generateEndpointPaths(spec);
+    // Returns: [{ slug, endpoint, spec, baseUrl }, ...]
+    ```
+  </Tab>
+
+  <Tab title="getEndpointBySlug">
+    ```typescript
+    import { getEndpointBySlug } from '@superdocs/utils/openapi';
+
+    // Find an endpoint by its generated slug
+    const endpoint = getEndpointBySlug(spec, 'get-users-id');
+    ```
+  </Tab>
+
+  <Tab title="groupEndpointsByTag">
+    ```typescript
+    import { groupEndpointsByTag } from '@superdocs/utils/openapi';
+
+    // Group endpoints by their OpenAPI tags
+    const groups = groupEndpointsByTag(spec);
+    // Returns: { "Users": [...], "Posts": [...] }
+    ```
+  </Tab>
+</Tabs>
+
+## Customizing the Base URL
+
+You can override the server URL from the OpenAPI spec:
+
+```astro
+<EndpointPage
+  endpoint={endpoint}
+  spec={spec}
+  baseUrl="https://staging-api.example.com"
+/>
+```
+
+## Adding API Navigation
+
+Use `groupEndpointsByTag` to create a navigation sidebar:
+
+```astro
+---
+import { groupEndpointsByTag, generateEndpointSlug } from '@superdocs/utils/openapi';
+
+const groups = groupEndpointsByTag(spec);
+---
+
+<nav>
+  {Object.entries(groups).map(([tag, endpoints]) => (
+    <div>
+      <h3>{tag}</h3>
+      <ul>
+        {endpoints.map((endpoint) => (
+          <li>
+            <a href={`/api/${generateEndpointSlug(endpoint)}`}>
+              <span class={`method-${endpoint.method.toLowerCase()}`}>
+                {endpoint.method}
+              </span>
+              {endpoint.summary || endpoint.path}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</nav>
+```

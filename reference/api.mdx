@@ -11,21 +11,27 @@ SuperDocs provides specialized components for documenting REST APIs. This page d
 
 ## APIEndpoint
 
-Display an API endpoint with method badges and descriptions.
+Display an API endpoint with method badges, authentication indicators, and descriptions.
 
 ```jsx
-<APIEndpoint method="GET" path="/users/{id}" description="Retrieve a user by their unique ID." />
+<APIEndpoint
+  method="GET"
+  path="/users/{id}"
+  description="Retrieve a user by their unique ID."
+  auth="bearer"
+  baseUrl="https://api.example.com"
+/>
 ```
 
-<APIEndpoint method="GET" path="/users/{id}" description="Retrieve a user by their unique ID." />
+<APIEndpoint method="GET" path="/users/{id}" description="Retrieve a user by their unique ID." auth="bearer" />
 
 ### Supported Methods
 
 <APIEndpoint method="GET" path="/users" description="List all users" />
-<APIEndpoint method="POST" path="/users" description="Create a new user" />
-<APIEndpoint method="PUT" path="/users/{id}" description="Update a user" />
-<APIEndpoint method="PATCH" path="/users/{id}" description="Partially update a user" />
-<APIEndpoint method="DELETE" path="/users/{id}" description="Delete a user" />
+<APIEndpoint method="POST" path="/users" description="Create a new user" auth="bearer" />
+<APIEndpoint method="PUT" path="/users/{id}" description="Update a user" auth="bearer" />
+<APIEndpoint method="PATCH" path="/users/{id}" description="Partially update a user" auth="api-key" />
+<APIEndpoint method="DELETE" path="/users/{id}" description="Delete a user" auth="bearer" />
 
 ### Deprecated Endpoint
 
@@ -41,66 +47,99 @@ Display an API endpoint with method badges and descriptions.
 | `path` | `string` | The API path with placeholders like `{id}` |
 | `description` | `string` | Brief description of the endpoint |
 | `deprecated` | `boolean` | Mark endpoint as deprecated |
+| `auth` | `string` | Authentication type: `bearer`, `api-key`, `basic`, or `none` |
+| `baseUrl` | `string` | Base URL for the API |
 
 ---
 
 ## ParamTable & Param
 
-Document request parameters in a structured table.
+Document request parameters in a structured table with type-colored badges and icons.
 
 ```jsx
-<ParamTable title="Path Parameters">
+<ParamTable type="path">
   <Param name="id" type="string" required>
     The unique identifier of the user.
   </Param>
 </ParamTable>
 
-<ParamTable title="Query Parameters">
+<ParamTable type="query" expandable>
   <Param name="limit" type="integer" default="10">
     Maximum number of results to return.
   </Param>
   <Param name="offset" type="integer" default="0">
     Number of results to skip.
+  </Param>
+  <Param name="status" type="string" enum={["active", "pending", "inactive"]}>
+    Filter by user status.
   </Param>
 </ParamTable>
 ```
 
-<ParamTable title="Path Parameters">
+<ParamTable type="path">
   <Param name="id" type="string" required>
     The unique identifier of the user.
   </Param>
 </ParamTable>
 
-<ParamTable title="Query Parameters">
+<ParamTable type="query" expandable>
   <Param name="limit" type="integer" default="10">
     Maximum number of results to return.
   </Param>
   <Param name="offset" type="integer" default="0">
     Number of results to skip.
+  </Param>
+  <Param name="status" type="string" enum={["active", "pending", "inactive"]}>
+    Filter by user status.
+  </Param>
+</ParamTable>
+
+### Parameter Types
+
+<ParamTable type="header">
+  <Param name="Authorization" type="string" required>
+    Bearer token for authentication.
+  </Param>
+  <Param name="X-Request-ID" type="string">
+    Optional request tracking ID.
+  </Param>
+</ParamTable>
+
+<ParamTable type="body">
+  <Param name="email" type="string" required>
+    User's email address.
+  </Param>
+  <Param name="role" type="string" enum={["admin", "user", "guest"]} deprecated>
+    User role (deprecated, use permissions instead).
   </Param>
 </ParamTable>
 
 | Component | Prop | Type | Description |
 | :--- | :--- | :--- | :--- |
-| `ParamTable` | `title` | `string` | Section title (default: "Parameters") |
+| `ParamTable` | `title` | `string` | Section title (auto-generated from type) |
+| `ParamTable` | `type` | `string` | Parameter type: `path`, `query`, `header`, `body`, `cookie` |
+| `ParamTable` | `expandable` | `boolean` | Make the section collapsible |
+| `ParamTable` | `defaultOpen` | `boolean` | Default state for expandable (default: true) |
 | `Param` | `name` | `string` | Parameter name |
-| `Param` | `type` | `string` | Data type |
+| `Param` | `type` | `string` | Data type (string, integer, boolean, array, object, etc.) |
 | `Param` | `required` | `boolean` | Whether the parameter is required |
 | `Param` | `default` | `string` | Default value |
+| `Param` | `deprecated` | `boolean` | Mark as deprecated |
+| `Param` | `enum` | `string[]` | List of allowed values |
 
 ---
 
 ## ResponseField
 
-Document API response fields.
+Document API response fields with support for nested structures.
 
-### Example Response
+### Simple Fields
 
 ```jsx
 <ResponseField name="id" type="string">
   The user's unique identifier.
 </ResponseField>
-<ResponseField name="email" type="string">
+<ResponseField name="email" type="string" required>
   The user's email address.
 </ResponseField>
 <ResponseField name="name" type="string" nullable>
@@ -114,7 +153,7 @@ Document API response fields.
 <ResponseField name="id" type="string">
   The user's unique identifier.
 </ResponseField>
-<ResponseField name="email" type="string">
+<ResponseField name="email" type="string" required>
   The user's email address.
 </ResponseField>
 <ResponseField name="name" type="string" nullable>
@@ -122,54 +161,144 @@ Document API response fields.
 </ResponseField>
 <ResponseField name="created_at" type="datetime">
   ISO 8601 timestamp of when the user was created.
+</ResponseField>
+
+### Nested Fields (Expandable)
+
+```jsx
+<ResponseField name="data" type="object" expandable>
+  <ResponseField name="user" type="object" expandable>
+    <ResponseField name="id" type="string">User ID</ResponseField>
+    <ResponseField name="email" type="string">Email address</ResponseField>
+  </ResponseField>
+  <ResponseField name="permissions" type="array">
+    List of user permissions.
+  </ResponseField>
+</ResponseField>
+```
+
+<ResponseField name="data" type="object" expandable>
+  <ResponseField name="user" type="object" expandable>
+    <ResponseField name="id" type="string">User ID</ResponseField>
+    <ResponseField name="email" type="string">Email address</ResponseField>
+    <ResponseField name="profile" type="object" expandable defaultOpen={false}>
+      <ResponseField name="avatar" type="string" nullable>Profile picture URL</ResponseField>
+      <ResponseField name="bio" type="string" nullable>User biography</ResponseField>
+    </ResponseField>
+  </ResponseField>
+  <ResponseField name="permissions" type="array">
+    List of user permissions.
+  </ResponseField>
 </ResponseField>
 
 | Prop | Type | Description |
 | :--- | :--- | :--- |
 | `name` | `string` | Field name |
-| `type` | `string` | Data type |
+| `type` | `string` | Data type (color-coded) |
 | `nullable` | `boolean` | Whether the field can be null |
+| `required` | `boolean` | Mark as required field |
+| `deprecated` | `boolean` | Mark as deprecated |
+| `expandable` | `boolean` | Make collapsible for nested content |
+| `defaultOpen` | `boolean` | Default state for expandable (default: true) |
 
 ---
 
 ## APIPlayground
 
-Interactive API testing component that lets users make real API requests.
+Interactive API testing component that lets users make real API requests. Features include:
+
+- **Authentication support** - Bearer tokens, API keys, and Basic auth
+- **Code generation** - Generate code snippets in cURL, JavaScript, Python, and Go
+- **Request builder** - Add parameters, headers, and request bodies
+- **Response viewer** - See response body and headers with syntax highlighting
 
 ```jsx
-<APIPlayground method="GET" path="/users" baseUrl="https://jsonplaceholder.typicode.com" />
+<APIPlayground
+  method="GET"
+  path="/users"
+  baseUrl="https://jsonplaceholder.typicode.com"
+  auth="bearer"
+  defaultHeaders={{ "Content-Type": "application/json" }}
+/>
 ```
 
 <APIPlayground method="GET" path="/users" baseUrl="https://jsonplaceholder.typicode.com" />
 
+### With Authentication
+
+<APIPlayground method="POST" path="/posts" baseUrl="https://jsonplaceholder.typicode.com" auth="bearer" />
+
 | Prop | Type | Description |
 | :--- | :--- | :--- |
-| `method` | `string` | HTTP method |
+| `method` | `string` | HTTP method: `GET`, `POST`, `PUT`, `PATCH`, `DELETE` |
 | `path` | `string` | API endpoint path |
 | `baseUrl` | `string` | Base URL for the API (editable by users) |
+| `auth` | `string` | Auth type: `bearer`, `api-key`, `basic`, or `none` |
+| `defaultHeaders` | `object` | Default headers to include |
 
 > [!TIP]
-> The APIPlayground allows users to add custom headers, query parameters, and request bodies. Try it above!
+> The APIPlayground allows users to add custom headers, query parameters, and request bodies. Switch to the "Code" tab to get ready-to-use snippets!
+
+---
+
+## OpenAPI Support
+
+SuperDocs can automatically generate API documentation from OpenAPI/Swagger specifications.
+
+### OpenAPISpec Component
+
+Renders all endpoints from an OpenAPI spec file:
+
+```jsx
+import { parseOpenAPIFile } from 'superdocs-theme-default/utils/openapi';
+
+// In your .astro file frontmatter:
+const spec = await parseOpenAPIFile('./api-spec.yaml');
+
+// In your template:
+<OpenAPISpec spec={spec} showPlayground />
+```
+
+### OpenAPIEndpoint Component
+
+Render a single endpoint from a spec:
+
+```jsx
+<OpenAPIEndpoint spec={spec} method="GET" path="/users/{id}" showPlayground />
+```
+
+| Component | Prop | Type | Description |
+| :--- | :--- | :--- | :--- |
+| `OpenAPISpec` | `spec` | `object` | Parsed OpenAPI spec |
+| `OpenAPISpec` | `tag` | `string` | Filter endpoints by tag |
+| `OpenAPISpec` | `showPlayground` | `boolean` | Show interactive playground |
+| `OpenAPISpec` | `baseUrl` | `string` | Override base URL |
+| `OpenAPIEndpoint` | `spec` | `object` | Parsed OpenAPI spec |
+| `OpenAPIEndpoint` | `method` | `string` | HTTP method |
+| `OpenAPIEndpoint` | `path` | `string` | Endpoint path |
 
 ---
 
 ## Complete API Documentation Example
 
-Here's a full example of documenting an API endpoint:
+Here's a full example of documenting an API endpoint with all features:
 
 ### Get User by ID
 
-<APIEndpoint method="GET" path="/users/{id}" description="Retrieve detailed information about a specific user." />
+<APIEndpoint method="GET" path="/users/{id}" description="Retrieve detailed information about a specific user." auth="bearer" />
 
-<ParamTable title="Path Parameters">
+<ParamTable type="path">
   <Param name="id" type="string" required>
     The unique identifier of the user (UUID format).
   </Param>
 </ParamTable>
 
-<ParamTable title="Query Parameters">
-  <Param name="include" type="string">
-    Comma-separated list of related resources to include. Options: `posts`, `comments`, `profile`.
+<ParamTable type="query" expandable>
+  <Param name="include" type="string" enum={["posts", "comments", "profile"]}>
+    Related resources to include in the response.
+  </Param>
+  <Param name="fields" type="string">
+    Comma-separated list of fields to return.
   </Param>
 </ParamTable>
 
@@ -186,32 +315,40 @@ Here's a full example of documenting an API endpoint:
 }
 ```
 
-<ResponseField name="id" type="string">
-  Unique user identifier with `usr_` prefix.
+<ResponseField name="data" type="object" expandable>
+  <ResponseField name="id" type="string">
+    Unique user identifier with `usr_` prefix.
+  </ResponseField>
+  <ResponseField name="email" type="string" required>
+    User's verified email address.
+  </ResponseField>
+  <ResponseField name="name" type="string" nullable>
+    User's display name.
+  </ResponseField>
+  <ResponseField name="avatar_url" type="string" nullable>
+    URL to the user's profile picture.
+  </ResponseField>
+  <ResponseField name="metadata" type="object" expandable defaultOpen={false}>
+    <ResponseField name="created_at" type="datetime">
+      When the user account was created.
+    </ResponseField>
+    <ResponseField name="updated_at" type="datetime">
+      When the user was last modified.
+    </ResponseField>
+  </ResponseField>
 </ResponseField>
-<ResponseField name="email" type="string">
-  User's verified email address.
-</ResponseField>
-<ResponseField name="name" type="string" nullable>
-  User's display name.
-</ResponseField>
-<ResponseField name="avatar_url" type="string" nullable>
-  URL to the user's profile picture.
-</ResponseField>
-<ResponseField name="created_at" type="datetime">
-  When the user account was created.
-</ResponseField>
-<ResponseField name="updated_at" type="datetime">
-  When the user was last modified.
-</ResponseField>
+
+#### Try It
+
+<APIPlayground method="GET" path="/users/1" baseUrl="https://jsonplaceholder.typicode.com" auth="bearer" />
 
 ---
 
 ### Create User
 
-<APIEndpoint method="POST" path="/users" description="Create a new user account." />
+<APIEndpoint method="POST" path="/users" description="Create a new user account." auth="bearer" />
 
-<ParamTable title="Request Body">
+<ParamTable type="body">
   <Param name="email" type="string" required>
     A valid email address. Must be unique.
   </Param>
@@ -221,6 +358,9 @@ Here's a full example of documenting an API endpoint:
   <Param name="name" type="string">
     Optional display name.
   </Param>
+  <Param name="role" type="string" enum={["admin", "user", "guest"]} default="user">
+    User role assignment.
+  </Param>
 </ParamTable>
 
 #### Example Request
@@ -228,24 +368,25 @@ Here's a full example of documenting an API endpoint:
 ```bash
 curl -X POST https://api.example.com/users \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{"email": "john@example.com", "password": "securepass123", "name": "John Doe"}'
 ```
 
 #### Try It
 
-<APIPlayground method="POST" path="/posts" baseUrl="https://jsonplaceholder.typicode.com" />
+<APIPlayground method="POST" path="/posts" baseUrl="https://jsonplaceholder.typicode.com" auth="bearer" />
 
 ---
 
 ### Delete User
 
-<APIEndpoint method="DELETE" path="/users/{id}" description="Permanently delete a user account." />
+<APIEndpoint method="DELETE" path="/users/{id}" description="Permanently delete a user account." auth="bearer" />
 
 <Callout type="danger" title="Irreversible Action">
   Deleting a user will permanently remove all associated data including posts, comments, and files. This action cannot be undone.
 </Callout>
 
-<ParamTable title="Path Parameters">
+<ParamTable type="path">
   <Param name="id" type="string" required>
     The unique identifier of the user to delete.
   </Param>

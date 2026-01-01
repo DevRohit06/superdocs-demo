@@ -1,0 +1,65 @@
+---
+title: Get Post by ID
+description: Retrieve a single blog post by its ID
+api: GET /posts/{id}
+baseUrl: https://jsonplaceholder.typicode.com
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Retrieves detailed information about a specific blog post.
+
+## Path Parameters
+
+<ParamTable type="path">
+  <Param name="id" type="integer" required>
+    The unique identifier of the post to retrieve
+  </Param>
+</ParamTable>
+
+## Response
+
+<ResponseField name="id" type="integer">
+  Unique identifier for the post
+</ResponseField>
+
+<ResponseField name="userId" type="integer">
+  ID of the user who created the post
+</ResponseField>
+
+<ResponseField name="title" type="string">
+  Title of the post
+</ResponseField>
+
+<ResponseField name="body" type="string">
+  Full content of the post
+</ResponseField>
+
+## Example Response
+
+```json
+{
+  "userId": 1,
+  "id": 1,
+  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+}
+```
+
+## Related Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get Comments" href="/api/get-posts-id-comments" icon="lucide:message-circle">
+    Retrieve all comments for this post
+  </Card>
+  <Card title="List All Posts" href="/api/get-posts" icon="lucide:list">
+    View all posts with filtering options
+  </Card>
+</CardGroup>
+
+## Error Responses
+
+| Status | Description |
+|--------|-------------|
+| `404` | Post not found - the specified ID does not exist |

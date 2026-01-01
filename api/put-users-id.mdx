@@ -1,0 +1,82 @@
+---
+title: Update User
+description: Update an existing user's information
+api: PUT /users/{id}
+baseUrl: https://jsonplaceholder.typicode.com
+auth: bearer
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Updates an existing user's information. You can update any subset of fields - only the provided fields will be modified.
+
+## Authorization
+
+<Alert type="warning">
+  This endpoint requires authentication. Include a valid Bearer token in the Authorization header.
+</Alert>
+
+## Path Parameters
+
+<ParamTable type="path">
+  <Param name="id" type="integer" required>
+    The unique identifier of the user to update
+  </Param>
+</ParamTable>
+
+## Request Body
+
+All fields are optional. Only provided fields will be updated.
+
+<ParamTable type="body">
+  <Param name="name" type="string">
+    Full name of the user
+  </Param>
+  <Param name="email" type="string">
+    Email address. Must be a valid email format.
+  </Param>
+  <Param name="username" type="string">
+    Unique username
+  </Param>
+  <Param name="phone" type="string">
+    Phone number
+  </Param>
+  <Param name="website" type="string">
+    Personal website URL
+  </Param>
+</ParamTable>
+
+## Response
+
+Returns the updated user object.
+
+## Example Request
+
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com"
+}
+```
+
+## Example Response
+
+```json
+{
+  "id": 1,
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "username": "Bret",
+  "phone": "1-770-736-8031 x56442",
+  "website": "hildegard.org"
+}
+```
+
+## Error Responses
+
+| Status | Description |
+|--------|-------------|
+| `400` | Invalid request body |
+| `401` | Unauthorized - missing or invalid authentication |
+| `404` | User not found |

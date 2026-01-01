@@ -1,0 +1,392 @@
+openapi: 3.0.3
+info:
+  title: SuperDocs Example API
+  version: 1.0.0
+  description: |
+    This is an example API to demonstrate SuperDocs' automatic API documentation generation.
+    Each endpoint gets its own page with schema documentation on the left and an interactive
+    playground on the right.
+
+servers:
+  - url: https://jsonplaceholder.typicode.com
+    description: JSONPlaceholder (Demo API)
+
+tags:
+  - name: Users
+    description: User management operations
+  - name: Posts
+    description: Blog post operations
+  - name: Comments
+    description: Comment operations
+
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: List all users
+      description: Retrieve a list of all users in the system. Returns an array of user objects.
+      operationId: getUsers
+      parameters:
+        - name: _limit
+          in: query
+          description: Maximum number of users to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: _start
+          in: query
+          description: Number of users to skip (for pagination)
+          required: false
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Create a new user account with the provided information.
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                  description: Full name of the user
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  description: Email address of the user
+                  example: john@example.com
+                username:
+                  type: string
+                  description: Unique username
+                  example: johndoe
+                phone:
+                  type: string
+                  description: Phone number
+                  example: "1-770-736-8031"
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid request body
+        '409':
+          description: User already exists
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID
+      description: Retrieve a single user by their unique identifier.
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: The unique identifier of the user
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+
+    put:
+      tags:
+        - Users
+      summary: Update user
+      description: Update an existing user's information.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: The unique identifier of the user
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Full name of the user
+                email:
+                  type: string
+                  format: email
+                  description: Email address
+                username:
+                  type: string
+                  description: Unique username
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+
+    delete:
+      tags:
+        - Users
+      summary: Delete user
+      description: Permanently delete a user from the system.
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: The unique identifier of the user
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User deleted successfully
+        '404':
+          description: User not found
+
+  /posts:
+    get:
+      tags:
+        - Posts
+      summary: List all posts
+      description: Retrieve a list of all blog posts with optional filtering.
+      operationId: getPosts
+      parameters:
+        - name: userId
+          in: query
+          description: Filter posts by user ID
+          required: false
+          schema:
+            type: integer
+        - name: _limit
+          in: query
+          description: Maximum number of posts to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: A list of posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+
+    post:
+      tags:
+        - Posts
+      summary: Create a new post
+      description: Create a new blog post.
+      operationId: createPost
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - body
+                - userId
+              properties:
+                title:
+                  type: string
+                  description: Post title
+                  example: My First Post
+                body:
+                  type: string
+                  description: Post content
+                  example: This is the content of my first blog post.
+                userId:
+                  type: integer
+                  description: ID of the post author
+                  example: 1
+      responses:
+        '201':
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401':
+          description: Unauthorized - authentication required
+
+  /posts/{id}:
+    get:
+      tags:
+        - Posts
+      summary: Get post by ID
+      description: Retrieve a single blog post by its unique identifier.
+      operationId: getPostById
+      parameters:
+        - name: id
+          in: path
+          description: The unique identifier of the post
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Post details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: Post not found
+
+  /posts/{id}/comments:
+    get:
+      tags:
+        - Comments
+      summary: Get comments for a post
+      description: Retrieve all comments for a specific blog post.
+      operationId: getPostComments
+      parameters:
+        - name: id
+          in: path
+          description: The post ID to get comments for
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Post not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique user identifier
+        name:
+          type: string
+          description: Full name
+        username:
+          type: string
+          description: Unique username
+        email:
+          type: string
+          format: email
+          description: Email address
+        phone:
+          type: string
+          description: Phone number
+        website:
+          type: string
+          description: Personal website URL
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            suite:
+              type: string
+            city:
+              type: string
+            zipcode:
+              type: string
+        company:
+          type: object
+          properties:
+            name:
+              type: string
+            catchPhrase:
+              type: string
+            bs:
+              type: string
+
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique post identifier
+        userId:
+          type: integer
+          description: Author's user ID
+        title:
+          type: string
+          description: Post title
+        body:
+          type: string
+          description: Post content
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique comment identifier
+        postId:
+          type: integer
+          description: ID of the post this comment belongs to
+        name:
+          type: string
+          description: Comment title/subject
+        email:
+          type: string
+          format: email
+          description: Commenter's email
+        body:
+          type: string
+          description: Comment content

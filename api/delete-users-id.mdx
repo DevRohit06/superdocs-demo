@@ -1,0 +1,55 @@
+---
+title: Delete User
+description: Permanently delete a user from the system
+api: DELETE /users/{id}
+baseUrl: https://jsonplaceholder.typicode.com
+auth: bearer
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Permanently deletes a user from the system. This action cannot be undone.
+
+## Authorization
+
+<Alert type="danger">
+  This is a destructive operation that requires authentication. Use with caution.
+</Alert>
+
+## Path Parameters
+
+<ParamTable type="path">
+  <Param name="id" type="integer" required>
+    The unique identifier of the user to delete
+  </Param>
+</ParamTable>
+
+## Response
+
+Returns an empty object on successful deletion.
+
+```json
+{}
+```
+
+## Error Responses
+
+| Status | Description |
+|--------|-------------|
+| `401` | Unauthorized - missing or invalid authentication |
+| `404` | User not found |
+
+## Usage Notes
+
+<Steps>
+  <Step title="Verify User Exists">
+    Before deleting, you may want to verify the user exists using the GET endpoint.
+  </Step>
+  <Step title="Handle Dependencies">
+    Ensure any posts or comments associated with this user are handled appropriately.
+  </Step>
+  <Step title="Confirm Deletion">
+    This operation is irreversible. Consider implementing a confirmation step in your UI.
+  </Step>
+</Steps>

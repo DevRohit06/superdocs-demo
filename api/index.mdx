@@ -1,0 +1,67 @@
+---
+title: API Reference
+description: Complete API reference with interactive documentation
+---
+
+# API Reference
+
+Welcome to the SuperDocs Example API reference. This documentation is automatically generated from an OpenAPI specification and features interactive playgrounds for testing endpoints.
+
+<Card title="Base URL" icon="lucide:globe">
+  ```
+  https://jsonplaceholder.typicode.com
+  ```
+</Card>
+
+## Available Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Users" icon="lucide:users" href="/api/users">
+    Manage user accounts - create, read, update, and delete users.
+  </Card>
+
+  <Card title="Posts" icon="lucide:file-text" href="/api/posts">
+    Blog post management - create and retrieve posts.
+  </Card>
+
+  <Card title="Comments" icon="lucide:message-circle" href="/api/comments">
+    Comment system - retrieve comments for posts.
+  </Card>
+</CardGroup>
+
+## Authentication
+
+Some endpoints require authentication. Use a Bearer token in the Authorization header:
+
+```bash
+curl -X POST https://jsonplaceholder.typicode.com/posts \
+  -H "Authorization: Bearer your-token-here" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "My Post", "body": "Content", "userId": 1}'
+```
+
+## Quick Links
+
+### Users
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | [/users](/api/get-users) | List all users |
+| `POST` | [/users](/api/post-users) | Create a new user |
+| `GET` | [/users/\{id\}](/api/get-users-id) | Get user by ID |
+| `PUT` | [/users/\{id\}](/api/put-users-id) | Update user |
+| `DELETE` | [/users/\{id\}](/api/delete-users-id) | Delete user |
+
+### Posts
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | [/posts](/api/get-posts) | List all posts |
+| `POST` | [/posts](/api/post-posts) | Create a new post |
+| `GET` | [/posts/\{id\}](/api/get-posts-id) | Get post by ID |
+
+### Comments
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | [/posts/\{id\}/comments](/api/get-posts-id-comments) | Get comments for a post |

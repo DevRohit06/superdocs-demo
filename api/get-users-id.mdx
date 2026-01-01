@@ -1,0 +1,113 @@
+---
+title: Get User by ID
+description: Retrieve a single user by their unique identifier
+api: GET /users/{id}
+baseUrl: https://jsonplaceholder.typicode.com
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Retrieves detailed information about a specific user by their ID.
+
+## Path Parameters
+
+<ParamTable type="path">
+  <Param name="id" type="integer" required>
+    The unique identifier of the user to retrieve
+  </Param>
+</ParamTable>
+
+## Response
+
+<ResponseField name="id" type="integer">
+  Unique identifier for the user
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Full name of the user
+</ResponseField>
+
+<ResponseField name="username" type="string">
+  Unique username
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address
+</ResponseField>
+
+<ResponseField name="address" type="object" expandable>
+  Physical address of the user
+
+  <ResponseField name="street" type="string">
+    Street address
+  </ResponseField>
+  <ResponseField name="suite" type="string">
+    Apartment or suite number
+  </ResponseField>
+  <ResponseField name="city" type="string">
+    City name
+  </ResponseField>
+  <ResponseField name="zipcode" type="string">
+    Postal code
+  </ResponseField>
+  <ResponseField name="geo" type="object">
+    Geographic coordinates (lat, lng)
+  </ResponseField>
+</ResponseField>
+
+<ResponseField name="phone" type="string">
+  Phone number
+</ResponseField>
+
+<ResponseField name="website" type="string">
+  Personal website URL
+</ResponseField>
+
+<ResponseField name="company" type="object" expandable>
+  Company information
+
+  <ResponseField name="name" type="string">
+    Company name
+  </ResponseField>
+  <ResponseField name="catchPhrase" type="string">
+    Company slogan
+  </ResponseField>
+  <ResponseField name="bs" type="string">
+    Business description
+  </ResponseField>
+</ResponseField>
+
+## Example Response
+
+```json
+{
+  "id": 1,
+  "name": "Leanne Graham",
+  "username": "Bret",
+  "email": "Sincere@april.biz",
+  "address": {
+    "street": "Kulas Light",
+    "suite": "Apt. 556",
+    "city": "Gwenborough",
+    "zipcode": "92998-3874",
+    "geo": {
+      "lat": "-37.3159",
+      "lng": "81.1496"
+    }
+  },
+  "phone": "1-770-736-8031 x56442",
+  "website": "hildegard.org",
+  "company": {
+    "name": "Romaguera-Crona",
+    "catchPhrase": "Multi-layered client-server neural-net",
+    "bs": "harness real-time e-markets"
+  }
+}
+```
+
+## Error Responses
+
+| Status | Description |
+|--------|-------------|
+| `404` | User not found - the specified ID does not exist |

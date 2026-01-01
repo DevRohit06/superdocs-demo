@@ -1,0 +1,78 @@
+---
+title: List Posts
+description: Retrieve a list of all blog posts
+api: GET /posts
+baseUrl: https://jsonplaceholder.typicode.com
+layout: '@/layouts/APIEndpointLayout.astro'
+---
+
+## Overview
+
+Returns a list of all blog posts. Supports filtering by user ID and pagination.
+
+## Query Parameters
+
+<ParamTable type="query">
+  <Param name="userId" type="integer">
+    Filter posts by a specific user ID
+  </Param>
+  <Param name="_limit" type="integer" default="10">
+    Maximum number of posts to return
+  </Param>
+  <Param name="_start" type="integer" default="0">
+    Number of posts to skip for pagination
+  </Param>
+</ParamTable>
+
+## Response
+
+Returns an array of post objects.
+
+<ResponseField name="id" type="integer">
+  Unique identifier for the post
+</ResponseField>
+
+<ResponseField name="userId" type="integer">
+  ID of the user who created the post
+</ResponseField>
+
+<ResponseField name="title" type="string">
+  Title of the post
+</ResponseField>
+
+<ResponseField name="body" type="string">
+  Content of the post
+</ResponseField>
+
+## Example Response
+
+```json
+[
+  {
+    "userId": 1,
+    "id": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita..."
+  },
+  {
+    "userId": 1,
+    "id": 2,
+    "title": "qui est esse",
+    "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor..."
+  }
+]
+```
+
+## Filtering Examples
+
+### Get posts by a specific user
+
+```bash
+GET /posts?userId=1
+```
+
+### Paginate results
+
+```bash
+GET /posts?_start=10&_limit=5
+```
