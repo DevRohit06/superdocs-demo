@@ -1,0 +1,46 @@
+---
+title: Instalación
+description: Cómo instalar Lito en tu proyecto
+---
+
+# Instalación
+
+Esta guía te ayudará a instalar y configurar Lito en tu proyecto.
+
+## Requisitos Previos
+
+- Node.js 18 o superior
+- npm, pnpm o yarn
+
+## Instalación Rápida
+
+```bash
+# Instalar Lito globalmente
+npm install -g @litodocs/cli
+
+# O usar npx directamente
+npx @litodocs/cli dev -i ./docs
+```
+
+## Crear un Nuevo Proyecto
+
+```bash
+# Crear una nueva carpeta de documentación
+mkdir mis-docs
+cd mis-docs
+
+# Crear un archivo de configuración
+echo '{"metadata":{"name":"Mi Documentación"}}' > docs-config.json
+
+# Crear tu primera página
+echo '# Hola Mundo' > index.md
+
+# Iniciar el servidor de desarrollo
+lito dev -i .
+```
+
+## Siguientes Pasos
+
+<Card title="Inicio Rápido" href="/es/getting-started/quick-start">
+  Aprende a crear tu primer sitio de documentación
+</Card>

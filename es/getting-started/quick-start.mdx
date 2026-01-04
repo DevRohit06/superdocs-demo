@@ -1,0 +1,59 @@
+---
+title: Inicio Rápido
+description: Crea tu primer sitio de documentación con Lito
+---
+
+# Inicio Rápido
+
+Sigue esta guía para crear tu primer sitio de documentación en minutos.
+
+## Paso 1: Estructura del Proyecto
+
+Crea la siguiente estructura de carpetas:
+
+```
+mis-docs/
+├── docs-config.json
+├── introduction/
+│   └── index.mdx
+├── getting-started/
+│   ├── installation.mdx
+│   └── quick-start.mdx
+└── _images/
+    └── logo.png
+```
+
+## Paso 2: Configuración
+
+Crea un archivo `docs-config.json`:
+
+```json
+{
+  "metadata": {
+    "name": "Mi Documentación",
+    "description": "Documentación de mi proyecto"
+  },
+  "navigation": {
+    "sidebar": [
+      {
+        "label": "Introducción",
+        "items": [
+          { "label": "Bienvenido", "href": "/introduction" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+## Paso 3: Iniciar el Servidor
+
+```bash
+lito dev -i ./mis-docs
+```
+
+¡Eso es todo! Tu sitio de documentación estará disponible en `http://localhost:4321`.
+
+<Alert type="success">
+  ¡Felicidades! Has creado tu primer sitio de documentación con Lito.
+</Alert>
