@@ -27,7 +27,7 @@ jobs:
           node-version: 20
 
       - name: Build docs
-        run: npx --yes @litodocs/cli build -i . --base-url /docs/
+        run: npx --yes @litodocs/cli build -i . 
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
