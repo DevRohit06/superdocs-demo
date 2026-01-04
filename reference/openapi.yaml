@@ -1,9 +1,9 @@
 openapi: 3.0.3
 info:
-  title: SuperDocs Example API
+  title: Lito Example API
   version: 1.0.0
   description: |
-    This is an example API to demonstrate SuperDocs' automatic API documentation generation.
+    This is an example API to demonstrate Lito's automatic API documentation generation.
     Each endpoint gets its own page with schema documentation on the left and an interactive
     playground on the right.
 

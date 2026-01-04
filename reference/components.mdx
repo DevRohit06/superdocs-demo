@@ -5,7 +5,7 @@ description: Built-in components available in MDX.
 
 # Components
 
-SuperDocs comes with a set of built-in components to make your documentation richer. These are available globally in all `.mdx` files — no imports needed.
+Lito comes with a set of built-in components to make your documentation richer. These are available globally in all `.mdx` files — no imports needed.
 
 ---
 
@@ -15,12 +15,12 @@ A simple card component for links or highlights.
 
 ```jsx
 <Card title="Getting Started" icon="🚀" href="/getting-started/installation">
-  Learn how to install and configure SuperDocs.
+  Learn how to install and configure Lito.
 </Card>
 ```
 
 <Card title="Getting Started" icon="🚀" href="/getting-started/installation">
-  Learn how to install and configure SuperDocs.
+  Learn how to install and configure Lito.
 </Card>
 
 | Prop | Type | Description |
@@ -78,17 +78,17 @@ Organize content into switchable tabs.
 <Tabs>
   <Tab title="npm">
     ```bash
-    npm install superdocs
+    npm install @litodocs/cli
     ```
   </Tab>
   <Tab title="yarn">
     ```bash
-    yarn add superdocs
+    yarn add @litodocs/cli
     ```
   </Tab>
   <Tab title="pnpm">
     ```bash
-    pnpm add superdocs
+    pnpm add @litodocs/cli
     ```
   </Tab>
 </Tabs>
@@ -100,21 +100,21 @@ Organize content into switchable tabs.
 Collapsible content sections for FAQs or optional details.
 
 ```jsx
-<Accordion title="What is SuperDocs?" icon="❓">
-  SuperDocs is an open-source documentation generator built on Astro.
+<Accordion title="What is Lito?" icon="❓">
+  Lito is an open-source documentation generator built on Astro.
 </Accordion>
 
-<Accordion title="Is SuperDocs free?" defaultOpen>
-  Yes! SuperDocs is completely free and open-source.
+<Accordion title="Is Lito free?" defaultOpen>
+  Yes! Lito is completely free and open-source.
 </Accordion>
 ```
 
-<Accordion title="What is SuperDocs?" icon="❓">
-  SuperDocs is an open-source documentation generator built on Astro.
+<Accordion title="What is Lito?" icon="❓">
+  Lito is an open-source documentation generator built on Astro.
 </Accordion>
 
-<Accordion title="Is SuperDocs free?" defaultOpen>
-  Yes! SuperDocs is completely free and open-source.
+<Accordion title="Is Lito free?" defaultOpen>
+  Yes! Lito is completely free and open-source.
 </Accordion>
 
 | Prop | Type | Default | Description |
@@ -131,8 +131,8 @@ Display numbered step-by-step instructions.
 
 ```jsx
 <Steps>
-  <Step title="Install SuperDocs">
-    Run `npx superdocs create my-docs` to create a new project.
+  <Step title="Install Lito">
+    Run `npx @litodocs/cli dev -i ./my-docs` to create a new project.
   </Step>
   <Step title="Configure">
     Edit the `docs-config.json` file to customize your site.
@@ -144,8 +144,8 @@ Display numbered step-by-step instructions.
 ```
 
 <Steps>
-  <Step title="Install SuperDocs">
-    Run `npx superdocs create my-docs` to create a new project.
+  <Step title="Install Lito">
+    Run `npx @litodocs/cli dev -i ./my-docs` to create a new project.
   </Step>
   <Step title="Configure">
     Edit the `docs-config.json` file to customize your site.
@@ -211,10 +211,10 @@ Tabbed code blocks for showing code in multiple languages. Use the `title` attri
 ````text
 <CodeGroup>
   ```bash title="npm"
-  npm install superdocs
+  npm install @litodocs/cli
   ```
   ```bash title="yarn"
-  yarn add superdocs
+  yarn add lito
   ```
 </CodeGroup>
 ````
@@ -317,7 +317,7 @@ Create multi-column layouts.
 
 ## GitHub-Style Alerts
 
-SuperDocs also supports GitHub-style blockquote alerts:
+Lito also supports GitHub-style blockquote alerts:
 
 ```markdown
 > [!NOTE]

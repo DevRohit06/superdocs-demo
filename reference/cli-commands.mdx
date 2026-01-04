@@ -1,18 +1,25 @@
 ---
 title: CLI Commands
-description: Reference for the SuperDocs CLI.
+description: Reference for the Lito CLI.
 ---
 
 # CLI Commands
 
-The SuperDocs CLI provides powerful commands to develop, build, and manage your documentation site. All commands support detailed options for customization.
+The Lito CLI provides powerful commands to develop, build, and manage your documentation site. All commands support detailed options for customization.
+
+> [!NOTE]
+> If you have Lito installed globally, use `lito <command>`. Otherwise, use `npx @litodocs/cli <command>`.
 
 ## `build`
 
 Builds your documentation site for production deployment.
 
 ```bash
-superdocs build --input ./my-docs --output ./dist [options]
+# With global installation
+lito build --input ./my-docs --output ./dist [options]
+
+# With npx
+npx @litodocs/cli build --input ./my-docs --output ./dist [options]
 ```
 
 ### Options
@@ -23,6 +30,8 @@ superdocs build --input ./my-docs --output ./dist [options]
 | `--output`          | `-o`  | `<path>` | Output directory for the built site                            | `./dist`  |
 | `--template`        | `-t`  | `<name>` | Template to use: `default`, `github:owner/repo`, or local path | `default` |
 | `--base-url`        | `-b`  | `<url>`  | Base URL for the site (useful for subpath deployments)         | `/`       |
+| `--provider`        | —     | `<name>` | Hosting optimization: `vercel`, `netlify`, `cloudflare`, `static` | `static` |
+| `--rendering`       | —     | `<mode>` | Rendering mode: `static`, `server`, `hybrid`                   | `static`  |
 | `--name`            | —     | `<name>` | Set project name                                               | —         |
 | `--description`     | —     | `<text>` | Set project description                                        | —         |
 | `--primary-color`   | —     | `<hex>`  | Set primary theme color (hex format)                           | —         |
@@ -35,11 +44,12 @@ superdocs build --input ./my-docs --output ./dist [options]
 ### Example
 
 ```bash
-superdocs build -i ./docs -o ./build \
+lito build -i ./docs -o ./build \
+  --provider cloudflare \
+  --rendering server \
   --name "My Documentation" \
   --description "Complete reference" \
   --primary-color "#0066CC" \
-  --accent-color "#00CC66" \
   --search
 ```
 
@@ -48,7 +58,11 @@ superdocs build -i ./docs -o ./build \
 Starts a local development server with hot module reloading. Perfect for editing and previewing changes in real-time.
 
 ```bash
-superdocs dev --input ./my-docs [options]
+# With global installation
+lito dev --input ./my-docs [options]
+
+# With npx
+npx @litodocs/cli dev --input ./my-docs [options]
 ```
 
 ### Options
@@ -71,17 +85,21 @@ superdocs dev --input ./my-docs [options]
 ### Example
 
 ```bash
-superdocs dev -i ./docs -p 5000 \
+lito dev -i ./docs -p 5000 \
   --name "Development Docs" \
   --primary-color "#3B82F6"
 ```
 
 ## `eject`
 
-Exports the complete Astro project source code. Use this when you need full control over the project and want to customize beyond what SuperDocs configuration allows.
+Exports the complete Astro project source code. Use this when you need full control over the project and want to customize beyond what Lito configuration allows.
 
 ```bash
-superdocs eject --input ./my-docs --output ./astro-docs-project [options]
+# With global installation
+lito eject --input ./my-docs --output ./astro-docs-project [options]
+
+# With npx
+npx @litodocs/cli eject --input ./my-docs --output ./astro-docs-project [options]
 ```
 
 ### Options
@@ -104,7 +122,7 @@ superdocs eject --input ./my-docs --output ./astro-docs-project [options]
 ### Example
 
 ```bash
-superdocs eject -i ./docs -o ./my-astro-project \
+lito eject -i ./docs -o ./my-astro-project \
   --name "Customizable Docs" \
   --primary-color "#10B981" \
   --refresh
@@ -121,10 +139,12 @@ npm run build
 
 ## `template list`
 
-Lists all available SuperDocs templates.
+Lists all available Lito templates.
 
 ```bash
-superdocs template list
+lito template list
+# or
+npx @litodocs/cli template list
 ```
 
 ## `template cache`
@@ -132,7 +152,9 @@ superdocs template list
 Manages the template cache.
 
 ```bash
-superdocs template cache [options]
+lito template cache [options]
+# or
+npx @litodocs/cli template cache [options]
 ```
 
 ### Options
@@ -144,5 +166,38 @@ superdocs template cache [options]
 ### Example
 
 ```bash
-superdocs template cache --clear
+lito template cache --clear
 ```
+
+## `upgrade`
+
+Checks for updates and upgrades Lito to the latest version.
+
+```bash
+lito upgrade
+# or
+npx @litodocs/cli upgrade
+```
+
+This command will:
+
+1. Check the npm registry for the latest version
+2. Compare it with your installed version
+3. Prompt you to confirm the upgrade
+4. Automatically detect your package manager (pnpm, yarn, or npm)
+5. Run the appropriate install command
+
+### Example Output
+
+```
+🔍 Checking for updates...
+
+  Current version: 0.5.1
+  Latest version:  0.5.2
+
+? Upgrade from 0.5.1 to 0.5.2? (Y/n)
+```
+
+> [!TIP]
+> Lito automatically checks for updates when you run any command. If an update is available, you'll see a notification suggesting to run `lito upgrade`.
+
