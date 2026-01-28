@@ -1,0 +1,373 @@
+---
+title: Custom Landing Pages
+description: Create stunning landing pages with full HTML/CSS/JS control.
+---
+
+# Custom Landing Pages
+
+Lito gives you complete control over your landing page design. Whether you want a simple config-driven page or a fully custom HTML/CSS/JS experience, Lito supports it.
+
+## Landing Page Types
+
+| Type | Best For | Complexity |
+| :--- | :--- | :--- |
+| `default` | Quick start, no customization needed | None |
+| `config` | Simple hero + features from JSON | Low |
+| `sections` | Mix of custom and default sections | Medium |
+| `custom` | Full creative control with HTML/CSS/JS | High |
+| `none` | No landing, go straight to docs | None |
+
+## Quick Start
+
+### Option 1: Config-Based (Simplest)
+
+Just add a `landing` object to your `docs-config.json`:
+
+```json
+{
+  "landing": {
+    "enabled": true,
+    "hero": {
+      "title": "Build Amazing Docs",
+      "subtitle": "The easiest way to create beautiful documentation",
+      "cta": [
+        { "label": "Get Started", "href": "/introduction", "variant": "primary" },
+        { "label": "View on GitHub", "href": "https://github.com", "variant": "secondary" }
+      ]
+    },
+    "features": [
+      { "title": "Fast", "description": "Built on Astro for speed", "icon": "bolt" },
+      { "title": "Flexible", "description": "Customize everything", "icon": "settings" },
+      { "title": "Modern", "description": "Beautiful out of the box", "icon": "sparkles" }
+    ]
+  }
+}
+```
+
+### Option 2: Full Custom Landing
+
+For complete control, create a `_landing/` folder:
+
+```
+docs/
+├── _landing/
+│   ├── index.html      # Your landing page HTML
+│   ├── styles.css      # Your custom styles
+│   ├── script.js       # Interactive features
+│   └── assets/         # Images, icons, fonts
+├── introduction.mdx
+└── docs-config.json
+```
+
+Then configure:
+
+```json
+{
+  "landing": {
+    "type": "custom",
+    "source": "_landing",
+    "injectNav": true,
+    "injectFooter": true
+  }
+}
+```
+
+## Creating a Custom Landing Page
+
+### Step 1: Create the `_landing/` Folder
+
+```bash
+mkdir docs/_landing
+```
+
+### Step 2: Create `index.html`
+
+```html
+<!-- docs/_landing/index.html -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Welcome to <span class="highlight">MyProduct</span></h1>
+    <p class="subtitle">The best way to build amazing things</p>
+    <div class="cta-buttons">
+      <a href="/introduction" class="btn btn-primary">Get Started</a>
+      <a href="https://github.com" class="btn btn-secondary">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <h2>Why Choose Us?</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">⚡</div>
+      <h3>Lightning Fast</h3>
+      <p>Built for performance from the ground up.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🎨</div>
+      <h3>Beautiful Design</h3>
+      <p>Looks great without any configuration.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🔧</div>
+      <h3>Fully Customizable</h3>
+      <p>Tailor every aspect to your brand.</p>
+    </div>
+  </div>
+</section>
+```
+
+### Step 3: Add Styles (`styles.css`)
+
+```css
+/* docs/_landing/styles.css */
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
+  padding: 4rem 2rem;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.hero-content .highlight {
+  color: var(--primary-600);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: var(--gray-600);
+  margin-bottom: 2rem;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary-600);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-700);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--gray-900);
+  border: 1px solid var(--gray-200);
+}
+
+.btn-secondary:hover {
+  background: var(--gray-50);
+}
+
+.features {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.feature-card .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  margin-bottom: 0.5rem;
+}
+```
+
+### Step 4: Add Interactivity (`script.js`)
+
+```javascript
+// docs/_landing/script.js
+
+// Animate elements on scroll
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card').forEach(card => {
+    observer.observe(card);
+  });
+});
+```
+
+## Section-Based Landing
+
+For a mix of custom and default components, use the section-based approach:
+
+```json
+{
+  "landing": {
+    "type": "sections",
+    "sections": [
+      {
+        "type": "hero",
+        "source": "default",
+        "props": {
+          "title": "Build Something Amazing",
+          "subtitle": "Start your documentation journey"
+        }
+      },
+      {
+        "type": "custom",
+        "html": "_landing/features.html"
+      },
+      {
+        "type": "cta",
+        "source": "default"
+      },
+      {
+        "type": "custom",
+        "html": "_landing/pricing.html"
+      }
+    ]
+  }
+}
+```
+
+Create individual section files:
+
+```html
+<!-- docs/_landing/features.html -->
+<section class="custom-features">
+  <!-- Your custom features HTML -->
+</section>
+```
+
+```html
+<!-- docs/_landing/pricing.html -->
+<section class="pricing-table">
+  <!-- Your custom pricing HTML -->
+</section>
+```
+
+## Using Theme Variables
+
+Your custom landing page has access to Lito's theme CSS variables:
+
+```css
+/* Primary colors */
+var(--primary-50) through var(--primary-950)
+
+/* Gray scale */
+var(--gray-50) through var(--gray-950)
+
+/* Semantic colors */
+var(--success), var(--warning), var(--danger), var(--info)
+
+/* Typography */
+var(--font-sans)
+var(--font-mono)
+```
+
+This ensures your landing page matches the rest of your documentation site.
+
+## Configuration Options
+
+| Option | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `type` | `string` | `config` | `custom`, `sections`, `config`, `default`, `none` |
+| `source` | `string` | `_landing` | Folder containing custom landing files |
+| `injectNav` | `boolean` | `true` | Include the site navigation bar |
+| `injectFooter` | `boolean` | `true` | Include the site footer |
+
+## Disabling the Landing Page
+
+To skip the landing page entirely:
+
+```json
+{
+  "landing": {
+    "enabled": false
+  }
+}
+```
+
+Or:
+
+```json
+{
+  "landing": {
+    "type": "none"
+  }
+}
+```
+
+This redirects visitors directly to your documentation.
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Keep It Fast" icon="bolt">
+    Optimize images, minimize JavaScript, and leverage CSS for animations.
+  </Card>
+  <Card title="Stay Accessible" icon="universal-access">
+    Use semantic HTML, proper heading structure, and sufficient color contrast.
+  </Card>
+  <Card title="Mobile First" icon="mobile">
+    Design for mobile screens first, then enhance for larger displays.
+  </Card>
+  <Card title="Match Your Brand" icon="palette">
+    Use your brand colors via the `--primary-*` CSS variables.
+  </Card>
+</CardGroup>
+
+## Framework Support
+
+Custom landing pages work across all supported frameworks:
+
+| Framework | How It Works |
+| :--- | :--- |
+| **Astro** | Generates `index.astro` with scoped styles |
+| **React** | Creates `LandingPage.jsx` component |
+| **Next.js** | Generates `app/page.jsx` |
+| **Vue** | Creates `LandingPage.vue` SFC |
+
+Your HTML/CSS/JS source files remain the same regardless of the target framework.
