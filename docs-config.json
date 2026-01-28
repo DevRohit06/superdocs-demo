@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Lito docs",
     "description": "A comprehensive demo of Lito - the open-source Mintlify alternative",
-    "version": "0.6.0"
+    "version": "0.7.0"
   },
   "branding": {
     "favicon": "/fire-favicon.svg",
@@ -85,6 +85,11 @@
           {
             "label": "Customizing Theme",
             "href": "/guides/customizing-theme"
+          },
+          {
+            "label": "Custom Landing Pages",
+            "href": "/guides/custom-landing",
+            "icon": "lucide:layout"
           },
           {
             "label": "Adding Pages",
@@ -253,41 +258,10 @@
     "static": "_assets"
   },
   "landing": {
-    "enabled": false,
-    "hero": {
-      "version": "v0.3.0 is now available",
-      "title": "Lito <br/> <span class='text-primary'>Generated Landing</span>",
-      "subtitle": "This landing page is entirely defined in docs-config.json. No coding required.",
-      "cta": [
-        {
-          "label": "Read the Docs",
-          "href": "/introduction",
-          "variant": "primary"
-        },
-        {
-          "label": "GitHub",
-          "href": "https://github.com/Lito-docs/cli",
-          "variant": "secondary"
-        }
-      ]
-    },
-    "features": [
-      {
-        "title": "Zero Config",
-        "description": "Just add a JSON object and you have a landing page.",
-        "icon": "⚡"
-      },
-      {
-        "title": "Full Control",
-        "description": "Eject to MDX if you need custom components.",
-        "icon": "🎨"
-      },
-      {
-        "title": "Fast",
-        "description": "Built on Astro for maximum performance.",
-        "icon": "🚀"
-      }
-    ]
+    "type": "custom",
+    "source": "_landing",
+    "injectNav": true,
+    "injectFooter": true
   },
   "footer": {
     "layout": "full",
