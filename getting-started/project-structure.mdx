@@ -9,14 +9,32 @@ When you run `lito dev` or `lito build`, the CLI processes your input folder and
 
 ```text
 my-docs/
-├── docs-config.json  # Global configuration
-├── index.mdx         # Homepage
-├── getting-started/  # A folder for a section
-│   ├── index.mdx     # Section landing page (optional)
-│   └── setup.mdx     # Content page
+├── docs-config.json   # Global configuration
+├── index.mdx          # Homepage (or use _landing/)
+├── _landing/          # Custom landing page (optional)
+│   ├── index.html     # Landing HTML
+│   ├── styles.css     # Landing styles
+│   └── script.js      # Landing scripts
+├── _assets/           # Static assets → /assets/
+├── _images/           # Images → /images/
+├── _css/              # Custom CSS → src/styles/
+├── public/            # Public files → root
+├── getting-started/   # A folder for a section
+│   ├── index.mdx      # Section landing page (optional)
+│   └── setup.mdx      # Content page
 └── api/
     └── endpoints.mdx
 ```
+
+## Special Folders
+
+| Folder | Purpose | Synced To |
+| :--- | :--- | :--- |
+| `_landing/` | Custom landing page (HTML/CSS/JS) | Generates `index.astro` |
+| `_assets/` | Static files (PDFs, downloads) | `public/assets/` |
+| `_images/` | Images | `public/images/` |
+| `_css/` | Custom stylesheets | `src/styles/` |
+| `public/` | Public files (favicon, robots.txt) | `public/` |
 
 ## Key Files
 
@@ -25,6 +43,7 @@ my-docs/
 This is the brain of your documentation site. It controls:
 - **Navigation**: The sidebar structure.
 - **Branding**: Logo, favicon, colors.
+- **Landing**: Landing page configuration.
 - **SEO**: Meta tags, OpenGraph images.
 - **Integrations**: Analytics, etc.
 
@@ -33,6 +52,9 @@ This is the brain of your documentation site. It controls:
 Every folder can have an `index.mdx` file.
 - The root `index.mdx` is your site's homepage (`/`).
 - Sub-folder `index.mdx` files (e.g., `getting-started/index.mdx`) are accessible at that route (`/getting-started`).
+
+> [!TIP]
+> If you create a `_landing/` folder with custom HTML, it takes precedence over `index.mdx` for the homepage.
 
 ### Frontmatter
 
