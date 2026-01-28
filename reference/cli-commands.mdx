@@ -10,6 +10,38 @@ The Lito CLI provides powerful commands to develop, build, and manage your docum
 > [!NOTE]
 > If you have Lito installed globally, use `lito <command>`. Otherwise, use `npx @litodocs/cli <command>`.
 
+## `init`
+
+Initialize a new documentation project with interactive prompts or options.
+
+```bash
+# Interactive mode
+lito init
+
+# With options
+lito init --output ./my-docs --name "My Project" --template default
+```
+
+### Options
+
+| Option       | Alias | Type     | Description                         | Default       |
+| :----------- | :---- | :------- | :---------------------------------- | :------------ |
+| `--output`   | `-o`  | `<path>` | Output directory for the project    | (interactive) |
+| `--name`     | `-n`  | `<name>` | Project name                        | (interactive) |
+| `--template` | `-t`  | `<name>` | Template to use                     | `default`     |
+| `--sample`   | —     | flag     | Create sample documentation pages   | `true`        |
+
+### Example
+
+```bash
+lito init -o ./docs -n "My API Docs" -t default
+```
+
+This creates:
+- `docs-config.json` with your project settings
+- Sample `introduction.mdx` and `quickstart.mdx` pages
+- `_assets/` and `_images/` folders for static files
+
 ## `build`
 
 Builds your documentation site for production deployment.
@@ -135,6 +167,148 @@ cd my-astro-project
 npm install
 npm run dev
 npm run build
+```
+
+## `preview`
+
+Preview a production build locally. Optionally builds first if no output exists.
+
+```bash
+# Preview existing build
+lito preview --output ./dist
+
+# Build and preview
+lito preview --input ./my-docs
+```
+
+### Options
+
+| Option       | Alias | Type       | Description                                      | Default   |
+| :----------- | :---- | :--------- | :----------------------------------------------- | :-------- |
+| `--input`    | `-i`  | `<path>`   | Path to docs folder (will build if needed)       | —         |
+| `--output`   | `-o`  | `<path>`   | Path to built site                               | `./dist`  |
+| `--template` | `-t`  | `<name>`   | Template to use if building                      | `default` |
+| `--base-url` | `-b`  | `<url>`    | Base URL for the site                            | `/`       |
+| `--port`     | `-p`  | `<number>` | Port for preview server                          | `4321`    |
+
+### Example
+
+```bash
+# Quick preview of existing build
+lito preview -o ./dist -p 3000
+
+# Full build and preview workflow
+lito preview -i ./docs -o ./dist
+```
+
+## `validate`
+
+Validate your `docs-config.json` configuration against the schema.
+
+```bash
+lito validate --input ./my-docs
+```
+
+### Options
+
+| Option    | Alias | Type     | Description                            | Default           |
+| :-------- | :---- | :------- | :------------------------------------- | :---------------- |
+| `--input` | `-i`  | `<path>` | Path to the docs folder                | current directory |
+| `--quiet` | `-q`  | flag     | Quiet mode for CI (exit code only)     | `false`           |
+
+### Example
+
+```bash
+# Interactive validation with details
+lito validate -i ./docs
+
+# CI-friendly (exit code 0 = valid, 1 = invalid)
+lito validate -i ./docs --quiet && echo "Config is valid"
+```
+
+### What It Checks
+
+- Required fields (`metadata.name`)
+- Type validation (objects, arrays)
+- Sidebar structure (label + items required)
+- Config portability (core vs extension keys)
+
+## `doctor`
+
+Diagnose common issues with your documentation project.
+
+```bash
+lito doctor --input ./my-docs
+```
+
+### Options
+
+| Option    | Alias | Type     | Description             | Default           |
+| :-------- | :---- | :------- | :---------------------- | :---------------- |
+| `--input` | `-i`  | `<path>` | Path to the docs folder | current directory |
+
+### Checks Performed
+
+| Check                      | Description                                        |
+| :------------------------- | :------------------------------------------------- |
+| Directory exists           | Validates the path is a valid directory            |
+| `docs-config.json` exists  | Configuration file is present                      |
+| Config is valid JSON       | Can be parsed without errors                       |
+| Config passes validation   | Meets schema requirements                          |
+| Content files exist        | At least one `.md` or `.mdx` file found            |
+| No common issues           | Checks for misplaced files (node_modules, etc.)    |
+| Template cache             | Shows cached template status                       |
+| Node.js version            | Validates Node.js 18+ (recommends 20+)             |
+
+### Example Output
+
+```
+┌  Lito - Doctor
+│
+│  Checking: /path/to/docs
+│
+│  Diagnostic Results:
+│
+│    ✓ Directory exists
+│    ✓ docs-config.json exists
+│    ✓ Config is valid JSON
+│    ✓ Config passes validation
+│    ✓ Content files exist (34 files)
+│    ✓ No common issues
+│    ✓ Template cache (1 cached)
+│    ✓ Node.js version (v22.0.0)
+│
+└  Your project looks healthy! 🎉
+```
+
+## `info`
+
+Display project information and statistics.
+
+```bash
+lito info --input ./my-docs
+```
+
+### Options
+
+| Option    | Alias | Type     | Description             | Default           |
+| :-------- | :---- | :------- | :---------------------- | :---------------- |
+| `--input` | `-i`  | `<path>` | Path to the docs folder | current directory |
+
+### Information Displayed
+
+- **Project**: Name, description
+- **Content**: Markdown/MDX file counts, subdirectories
+- **Navigation**: Sidebar groups, navbar links
+- **Features**: Search, i18n, versioning, dark mode status
+- **Branding**: Logo, favicon, colors
+- **Configuration**: Core vs extension keys, portability
+- **Environment**: Node.js version, cached templates
+
+### Example
+
+```bash
+lito info -i ./docs
 ```
 
 ## `template list`

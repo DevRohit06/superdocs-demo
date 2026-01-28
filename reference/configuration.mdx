@@ -223,7 +223,11 @@ You can define different sidebars per locale:
 
 ### `landing`
 
-Configure an optional landing page:
+Configure your landing page. Lito supports multiple landing page approaches:
+
+#### Option 1: Config-Based Landing (Simple)
+
+Define your landing page directly in the config:
 
 ```json
 "landing": {
@@ -246,6 +250,77 @@ Configure an optional landing page:
   ]
 }
 ```
+
+#### Option 2: Full Custom Landing (HTML/CSS/JS)
+
+For complete control, create a `_landing/` folder with your own HTML, CSS, and JavaScript:
+
+```
+docs/
+├── _landing/
+│   ├── index.html      # Main landing structure
+│   ├── styles.css      # Landing styles (scoped)
+│   ├── script.js       # Interactions
+│   └── assets/         # Images, icons
+└── docs-config.json
+```
+
+Configure in `docs-config.json`:
+
+```json
+"landing": {
+  "type": "custom",
+  "source": "_landing",
+  "injectNav": true,
+  "injectFooter": true
+}
+```
+
+#### Option 3: Section-Based Landing (Mix & Match)
+
+Combine custom HTML sections with default template components:
+
+```json
+"landing": {
+  "type": "sections",
+  "sections": [
+    { "type": "hero", "source": "default" },
+    { "type": "custom", "html": "_landing/features.html" },
+    { "type": "cta", "source": "default" },
+    { "type": "custom", "html": "_landing/pricing.html" },
+    { "type": "testimonials", "source": "default" }
+  ]
+}
+```
+
+#### Landing Configuration Options
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `enabled` | `boolean` | `true` | Enable landing page. |
+| `type` | `string` | `config` | Landing type: `custom`, `sections`, `config`, `default`, `none`. |
+| `source` | `string` | `_landing` | Folder path for custom landing. |
+| `injectNav` | `boolean` | `true` | Include site navbar on custom landing. |
+| `injectFooter` | `boolean` | `true` | Include site footer on custom landing. |
+| `hero` | `object` | - | Hero section config (for `config` type). |
+| `features` | `array` | - | Features list (for `config` type). |
+| `sections` | `array` | - | Section definitions (for `sections` type). |
+
+#### Available Section Types
+
+Templates should support these section types for section-based landings:
+
+| Section | Description |
+| :--- | :--- |
+| `hero` | Main hero with title, subtitle, CTA buttons |
+| `features` | Feature grid or list |
+| `cta` | Call-to-action banner |
+| `testimonials` | Customer testimonials |
+| `pricing` | Pricing tables |
+| `faq` | Frequently asked questions |
+| `stats` | Statistics/metrics display |
+| `logos` | Partner/client logos |
+| `comparison` | Feature comparison table |
 
 ### `footer`
 
